@@ -1,0 +1,33 @@
+d = {}
+increasing = {}
+decreasing = {}
+hz = int(input())
+print('Частота =', hz, 'Гц')
+with open('C:\\Users\\Дима\\Downloads\\prudinnik.txt', 'r') as data:
+    for line in data:
+        line = line.rstrip().split('\t')
+        d[line[0]] = line[1]#key is time, value is voltage
+    if hz == 1:
+        variable = 0.502
+    elif hz == 2:
+        variable = 0.251
+    else:
+        print('Такая частота ещё не запрограммирована')        
+    tmin = min(d, key = d.get)#time of minimum
+    minimum = d[tmin]
+    print('Минимальное напряжение в одном периоде =', minimum)
+    for key in d:
+        if float(tmin) < float(key) < (float(tmin) + variable):#increasing voltage dict in period depending on frequency
+            increasing[key] = d.get(key)
+    tmax = max(increasing, key = increasing.get)
+    maximum = d[tmax]
+    print('Максимальное напряжение в одном периоде(том же самом) =', maximum)
+    il = list(increasing.values())#list of increasing voltage
+    print(il)
+    for key in d:
+        if float(tmax) < float(key) < (float(tmax) + variable):#decreasing voltage dict in period depending on frequency
+            decreasing[key] = d.get(key)
+    dl = list(decreasing.values())#list of decreasing voltage
+    print(dl)
+    
+    
